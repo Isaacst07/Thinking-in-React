@@ -1,0 +1,15 @@
+Relato de Aprendizado — Atividade "Thinking in React"
+
+Nesta atividade implementei o exemplo "Thinking in React", disponível na documentação oficial do React (react.dev/learn/thinking-in-react), que consiste em uma tabela de produtos filtrável por texto e por disponibilidade em estoque. O objetivo era aplicar, na prática, o raciocínio que a própria documentação propõe para projetar interfaces em React: decompor a tela em componentes, identificar a hierarquia entre eles, decidir onde o estado deve viver e conectar o fluxo de dados entre pais e filhos.
+
+O projeto foi criado com Vite, usando o template React + TypeScript, e nomeado produtos-web. Optei por TypeScript para tipar os dados dos produtos e as propriedades (props) de cada componente, o que ajudou a identificar erros ainda durante o desenvolvimento — por exemplo, garantir que o campo "stocked" fosse sempre booleano e que toda função passada como prop tivesse a assinatura correta.
+
+Segui a quebra de componentes sugerida pela documentação: FilterableProductTable (componente principal, que guarda o estado de filtro de texto e do checkbox "somente em estoque"), SearchBar (campo de busca e checkbox, componente controlado, sem estado próprio), ProductTable (monta as linhas visíveis a partir dos dados e dos filtros) e, dentro dela, ProductCategoryRow e ProductRow. Esse exercício deixou claro o princípio central do "Thinking in React": o estado deve viver no ancestral comum mais próximo de todos os componentes que precisam dele, e os dados fluem de cima para baixo (top-down), enquanto eventos de interação sobem por meio de funções de callback passadas como props.
+
+Para a estilização, usei TailwindCSS (versão 4, integrada via plugin do Vite), o que agilizou bastante a construção do layout, já que as classes utilitárias evitam a necessidade de escrever CSS separado para cada componente, mantendo a estilização próxima do JSX e fácil de ajustar.
+
+A principal dificuldade foi entender, antes de escrever código, qual estado pertencia a qual componente — é tentador deixar cada componente controlar sua própria parte do filtro, mas isso quebraria a sincronização entre o campo de busca e a tabela. Centralizar filterText e inStockOnly no componente FilterableProductTable e repassá-los via props resolveu esse problema e tornou o comportamento previsível.
+
+Por fim, o projeto foi versionado no GitHub e implantado na Vercel, com deploy automático a cada push na branch main, o que me permitiu validar rapidamente que a aplicação buildada funcionava igual ao ambiente local.
+
+Como aprendizado principal, fica a importância de projetar a estrutura de componentes e o fluxo de estado antes de implementar, em vez de escrever a interface e só depois descobrir onde o estado deveria estar — é exatamente esse o raciocínio que o "Thinking in React" ensina.
